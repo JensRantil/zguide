@@ -3,6 +3,7 @@
 Implements the MDP/Worker spec at http:#rfc.zeromq.org/spec:18.
 
 Author: Min RK <benjaminrk@gmail.com>
+        Jens Rantil <jens.rantil@gmail.com>
 Based on Java example by Arkadiusz Orzechowski
 """
 
@@ -56,13 +57,14 @@ class MajorDomoClient(object):
         """
         if not isinstance(request, list):
             request = [request]
-        request = [MDP.C_CLIENT, service] + request
+        request = [MDP.C_CLIENT, MDP.C_REQUEST, service] + request
         if self.verbose:
             logging.warn("I: send request to '%s' service: ", service)
             dump(request)
         reply = None
 
         retries = self.retries
+        replies = []
         while retries > 0:
             self.client.send_multipart(request)
             try:
@@ -77,16 +79,21 @@ class MajorDomoClient(object):
                     dump(msg)
 
                 # Don't try to handle errors, just assert noisily
-                assert len(msg) >= 3
+                assert len(msg) >= 4
 
                 header = msg.pop(0)
                 assert MDP.C_CLIENT == header
+
+                header_type = msg.pop(0)
+                assert header_type in (MDP.C_PARTIAL, MDP.C_FINAL)
 
                 reply_service = msg.pop(0)
                 assert service == reply_service
 
                 reply = msg
-                break
+                replies.extend(reply)
+                if header_type == MDP.C_FINAL:
+                    break
             else:
                 if retries:
                     logging.warn("W: no reply, reconnecting...")
@@ -96,7 +103,7 @@ class MajorDomoClient(object):
                     break
                 retries -= 1
 
-        return reply
+        return replies
 
     def destroy(self):
         self.context.destroy()
