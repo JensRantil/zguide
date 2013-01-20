@@ -1,6 +1,6 @@
 """Majordomo Protocol Worker API, Python version
 
-Implements the MDP/Worker spec at http:#rfc.zeromq.org/spec:7.
+Implements the MDP/Worker spec at http:#rfc.zeromq.org/spec:18.
 
 Author: Min RK <benjaminrk@gmail.com>
 Based on Java example by Arkadiusz Orzechowski
@@ -17,7 +17,7 @@ import MDP
 class MajorDomoWorker(object):
     """Majordomo Protocol Worker API, Python version
 
-    Implements the MDP/Worker spec at http:#rfc.zeromq.org/spec:7.
+    Implements the MDP/Worker spec at http:#rfc.zeromq.org/spec:18.
     """
 
     HEARTBEAT_LIVENESS = 3 # 3-5 is reasonable

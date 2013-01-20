@@ -1,6 +1,6 @@
 """
 Majordomo Protocol broker
-A minimal implementation of http:#rfc.zeromq.org/spec:7 and spec:8
+A minimal implementation of http:#rfc.zeromq.org/spec:18 and spec:8
 
 Author: Min RK <benjaminrk@gmail.com>
 Based on Java example by Arkadiusz Orzechowski
@@ -43,7 +43,7 @@ class Worker(object):
 class MajorDomoBroker(object):
     """
     Majordomo Protocol broker
-    A minimal implementation of http:#rfc.zeromq.org/spec:7 and spec:8
+    A minimal implementation of http:#rfc.zeromq.org/spec:18 and spec:8
     """
 
     # We'd normally pull these from config data
