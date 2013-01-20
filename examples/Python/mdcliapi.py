@@ -91,6 +91,9 @@ class MajorDomoClient(object):
                 assert service == reply_service
 
                 reply = msg
+                # TODO: Create a separate class function that `yield`s partial
+                #       results. This will make is possible for the client to
+                #       process incoming partials one by one.
                 replies.extend(reply)
                 if header_type == MDP.C_FINAL:
                     break
